@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import unae.lp3.FacatAPP.model.Facultad;
 
 /**
  *
@@ -29,10 +30,10 @@ public class IndexController {
 
     @GetMapping("/list")
     public String list(Model model) {
-        LinkedList<String> facultades = new LinkedList<String>();
-        facultades.add("FACAT");
-        facultades.add("FACEM");
-        facultades.add("FACSA");
+        LinkedList<Facultad> facultades = new LinkedList<Facultad>();
+        //facultades.add("FACAT");
+        //facultades.add("FACEM");
+        //facultades.add("FACSA");
         model.addAttribute("title",
                 "Lista de Faultades");
         model.addAttribute("header",

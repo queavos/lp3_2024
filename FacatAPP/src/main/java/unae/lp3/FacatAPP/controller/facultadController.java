@@ -8,7 +8,9 @@ import java.util.LinkedList;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import unae.lp3.FacatAPP.model.Facultad;
 
 /**
@@ -45,5 +47,32 @@ public class facultadController {
         model.addAttribute("facultades",
                 facultades);
         return "lista";
+    }
+
+    @GetMapping("/form")
+    public String form(Model model) {
+        Facultad facu = new Facultad();
+        facu.setNombre("Facultad de Ciencias Artes y Tecno");
+        facu.setSigla("FACAT");
+        facu.setId(1);
+        model.addAttribute("dato",
+                facu);
+
+        return "facultades/form";
+    }
+
+    @PostMapping("/form")
+    public String guardar(Model model,
+            Facultad facu) //            @RequestParam("nombre") String nombre,
+    //            @RequestParam("sigla") String sigla) 
+    {
+
+//        model.addAttribute("nombre",
+//                facu.getNombre());
+//        model.addAttribute("sigla",
+//                facu.getSigla());
+        model.addAttribute("dato",
+                facu);
+        return "facultades/form";
     }
 }

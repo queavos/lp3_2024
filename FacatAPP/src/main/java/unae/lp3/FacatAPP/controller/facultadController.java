@@ -5,6 +5,8 @@
 package unae.lp3.FacatAPP.controller;
 
 import java.util.LinkedList;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import unae.lp3.FacatAPP.model.Facultad;
+import unae.lp3.FacatAPP.repositories.facultadRepository;
 
 /**
  *
@@ -21,9 +24,12 @@ import unae.lp3.FacatAPP.model.Facultad;
 @RequestMapping("/facultades")
 public class facultadController {
 
-    @GetMapping("/list")
+    @Autowired
+    private facultadRepository facurepo;
+
+    @GetMapping("/")
     public String list(Model model) {
-        LinkedList<Facultad> facultades = new LinkedList<Facultad>();
+        List<Facultad> facultades = new LinkedList<Facultad>();
         Facultad facu1 = new Facultad();
         facu1.setNombre("Facultad de Ciencias Artes y Tecnologia");
         facu1.setSigla("FACAT");
@@ -36,27 +42,52 @@ public class facultadController {
         Facultad facu4 = new Facultad();
         facu4.setNombre("Facultad de Ciencias Veterinarias");
         facu4.setSigla("FACVA");
-        facultades.add(facu1);
-        facultades.add(facu2);
-        facultades.add(facu3);
-        facultades.add(facu4);
+//        facultades.add(facu1);
+//        facultades.add(facu2);
+//        facultades.add(facu3);
+//        facultades.add(facu4);
+        facurepo.save(facu1);
+        facurepo.save(facu2);
+        facurepo.save(facu3);
+        facurepo.save(facu4);
+        facultades = facurepo.findAll();
         model.addAttribute("title",
                 "Lista de Faultades");
         model.addAttribute("header",
                 "Facultades");
         model.addAttribute("facultades",
                 facultades);
-        return "lista";
+        return "facultades/lista";
     }
 
-    @GetMapping("/form")
-    public String form(Model model) {
+    @GetMapping("/nuevo")
+    public String nuevo(Model model) {
         Facultad facu = new Facultad();
-        facu.setNombre("Facultad de Ciencias Artes y Tecno");
-        facu.setSigla("FACAT");
-        facu.setId(1);
+//        facu.setNombre("Facultad de Ciencias Artes y Tecno");
+//        facu.setSigla("FACAT");
+//        facu.setId(1);
+        model.addAttribute("title",
+                "Agregar de Faultad ");
         model.addAttribute("dato",
                 facu);
+
+        return "facultades/form";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String actualizar(Model model,
+            Facultad facu) {
+        int facuid = facu.getId();
+        Facultad f = facurepo.findById(facuid).
+                orElse(null);
+        //facu=facurepo.findById(facu.getId());
+//        facu.setNombre("Facultad de Ciencias Artes y Tecno");
+//        facu.setSigla("FACAT");
+//        facu.setId(1);
+        model.addAttribute("title",
+                "Editar de Faultad: ");
+        model.addAttribute("dato",
+                f);
 
         return "facultades/form";
     }
@@ -71,8 +102,22 @@ public class facultadController {
 //                facu.getNombre());
 //        model.addAttribute("sigla",
 //                facu.getSigla());
+        facurepo.save(facu);
         model.addAttribute("dato",
                 facu);
-        return "facultades/form";
+        return "redirect:/facultades/";
+    }
+
+    @GetMapping("/borrar/{id}")
+    public String borrar(Model model,
+            Facultad facu) {
+        //int facuid = facu.getId();
+//        Facultad f = facurepo.findById(facuid).
+//                orElse(null);
+        facurepo.delete(facu);
+        model.addAttribute("dato",
+                facu);
+
+        return "redirect:/facultades/";
     }
 }

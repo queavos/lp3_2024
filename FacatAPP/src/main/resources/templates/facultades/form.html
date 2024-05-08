@@ -7,15 +7,16 @@
         <div th:replace="/comunes/fragmentos.html :: head"></div>
     </head>
         <body>
-            <P th:text="${dato}"></p>   
-                    <h1>Formulario de facultades</h1>
+            <header th:replace="/comunes/fragmentos.html :: header">   </header>
+            <h2 th:text="${title}+${dato.nombre}">title</h2>
+            <div class="container">     
               <form method="post" th:action="@{/facultades/form}"  th:object="${dato}">
-                  <input type="text" id="id"  th:field="*{id}"  > <br>
+                  <input type="hidden" id="id"  th:field="*{id}"  > <br>
              <label for="name">Nombre:</label><br>
                 <input class="form-control" type="text" id="nombre" name="nombre" th:field="*{nombre}" ><br>
-                <label class="form-control"  for="sigla">Sigla:</label><br>
-                <input type="text" id="sigla" name="sigla" th:field="*{sigla}"  ><br>
+                <label   for="sigla">Sigla:</label><br>
+                <input class="form-control" type="text" id="sigla" name="sigla" th:field="*{sigla}"  ><br>
                 <input class="btn btn-success"  type="submit" value="Enviar">
-            </form>
+            </form> </div>    
     </body>
 </html>

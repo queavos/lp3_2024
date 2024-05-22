@@ -19,20 +19,20 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author ossva
  */
 @Entity
-@Table(name = "facultades")
-public class Facultad {
+@Table(name = "oportunidades")
+public class Oportunidad {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "facu_nombre",
+    @Column(name = "oport_nombre",
             length = 100,
             nullable = false)
     private String nombre;
-    @Column(name = "facu_sigla",
+    @Column(name = "oport_codi",
             length = 15,
             nullable = false)
-    private String sigla;
+    private String codigo;
     @CreationTimestamp
     private LocalDateTime created_at;
     @UpdateTimestamp
@@ -54,18 +54,15 @@ public class Facultad {
         this.updated_at = updated_at;
     }
 
+    public Oportunidad() {
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Facultad(String nombre,
-            String sigla) {
-        this.nombre = nombre;
-        this.sigla = sigla;
     }
 
     public String getNombre() {
@@ -76,20 +73,17 @@ public class Facultad {
         this.nombre = nombre;
     }
 
-    public String getSigla() {
-        return sigla;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setSigla(String sigla) {
-        this.sigla = sigla;
-    }
-
-    public Facultad() {
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
     @Override
     public String toString() {
-        return "Facultad{" + "id=" + id + ", nombre=" + nombre + ", sigla=" + sigla + '}';
+        return "Oportunidad{" + "id=" + id + ", nombre=" + nombre + ", codigo=" + codigo + '}';
     }
 
 }

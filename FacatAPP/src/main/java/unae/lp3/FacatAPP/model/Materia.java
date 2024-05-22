@@ -9,8 +9,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,35 +21,39 @@ import org.hibernate.annotations.UpdateTimestamp;
  * @author ossva
  */
 @Entity
-@Table(name = "docentes")
-public class Docente {
+@Table(name = "materias")
+public class Materia {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "doce_nombre",
+    @Column(name = "mate_nombre",
             length = 100,
             nullable = false)
-    private String fname;
-    @Column(name = "doce_apellido",
-            length = 100,
-            nullable = false)
-    private String lname;
-    @Column(name = "doce_mail",
-            length = 100,
+    private String nombre;
+    @Column(name = "mate_codigo",
+            length = 12,
             nullable = false,
             unique = true)
-    private String email;
-    @Column(name = "doce_cumple")
-    private Date dob;
-    @Column(name = "doce_cel")
-    private String mobile;
+    private String codigo;
+    @Column(name = "mate_anho",
+
+            nullable = false
+    )
+    private Integer year;
+
+    @OneToOne
+    @JoinColumn(name = "carre_id")
+    private Carrera carrera;
+    @OneToOne
+    @JoinColumn(name = "doce_id")
+    private Docente docente;
     @CreationTimestamp
     private LocalDateTime created_at;
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
-    public Docente() {
+    public Materia() {
     }
 
     public Integer getId() {
@@ -59,44 +64,44 @@ public class Docente {
         this.id = id;
     }
 
-    public String getFname() {
-        return fname;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getLname() {
-        return lname;
+    public String getCodigo() {
+        return codigo;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public String getEmail() {
-        return email;
+    public Integer getYear() {
+        return year;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
-    public Date getDob() {
-        return dob;
+    public Carrera getCarrera() {
+        return carrera;
     }
 
-    public void setDob(Date dob) {
-        this.dob = dob;
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
     }
 
-    public String getMobile() {
-        return mobile;
+    public Docente getDocente() {
+        return docente;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setDocente(Docente docente) {
+        this.docente = docente;
     }
 
     public LocalDateTime getCreated_at() {
@@ -117,7 +122,7 @@ public class Docente {
 
     @Override
     public String toString() {
-        return "Docente{" + "id=" + id + ", fname=" + fname + ", lname=" + lname + ", email=" + email + ", dob=" + dob + ", mobile=" + mobile + '}';
+        return "Materia{" + "id=" + id + ", nombre=" + nombre + ", codigo=" + codigo + ", year=" + year + ", carrera=" + carrera + ", docente=" + docente + ", created_at=" + created_at + ", updated_at=" + updated_at + '}';
     }
 
 }
